@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 6fb03204c5cab0440b8922b1b0a23db4
+guid: f8b5602f16fcc1844a62c2e57698b430
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -6800647632711348043
-    second: Arcade - Donkey Kong - 25 M50 M_0
+      213: -5786137040741636074
+    second: Arcade - Donkey Kong - 25 M50 M 1_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,7 +113,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Arcade - Donkey Kong - 25 M50 M_0
+      name: Arcade - Donkey Kong - 25 M50 M 1_0
       rect:
         serializedVersion: 2
         x: 0
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 5b093a9620f3f91a0800000000000000
-      internalID: -6800647632711348043
+      spriteID: 6186dd8840383bfa0800000000000000
+      internalID: -5786137040741636074
       vertices: []
       indices: 
       edges: []

@@ -4,11 +4,12 @@ public class Player : MonoBehaviour
 {
     [Header("Movement Settings")]
     public float moveSpeed = 3f;
-    public float jumpForce = 2f;
+    public float jumpForce = 1f;
+    public float slipperyFactor = 0.3f;
 
     [Header("Ground Check")]
     public Transform groundCheck;
-    public float groundCheckRadius = 0.2f;
+    public float groundCheckDistance = 0.2f;
     public LayerMask groundLayer;
 
     private Rigidbody2D rb;
@@ -29,7 +30,8 @@ public class Player : MonoBehaviour
         // Get input values
         ProcessInput();
 
-        isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
+        // Check if the player is grounded using a raycast
+        isGrounded = Physics2D.Raycast(groundCheck.position, Vector2.down, groundCheckDistance, groundLayer);
     }
 
     private void FixedUpdate()
@@ -59,12 +61,17 @@ public class Player : MonoBehaviour
 
     private void Move()
     {
-        rb.linearVelocity = new Vector2(moveInput * moveSpeed, rb.linearVelocity.y);
+        // Smoothly interpolate to the target velocity
+        Vector2 targetVelocity = new Vector2(moveInput * moveSpeed, rb.linearVelocity.y);
+        rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, targetVelocity, slipperyFactor);
 
         // Flip sprite if moving left
-        if (moveInput < 0) {
+        if (moveInput < 0)
+        {
             spriteRenderer.flipX = true;
-        } else if (moveInput > 0) {
+        }
+        else if (moveInput > 0)
+        {
             spriteRenderer.flipX = false;
         }
     }
