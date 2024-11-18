@@ -6,18 +6,23 @@ public class Player : MonoBehaviour
     public float moveSpeed = 3f;
     public float jumpForce = 1f;
     public float slipperyFactor = 0.3f;
+    public float climbSpeed = 2f;  // Speed at which the player climbs the ladder
+    public float gravityScale = 2.5f;  // Gravity scale of the player
 
     [Header("Ground Check")]
     public Transform groundCheck;
     public float groundCheckDistance = 0.2f;
     public LayerMask groundLayer;
 
+    private Collider2D ladderCollider;
+
     private Rigidbody2D rb;
     private SpriteRenderer spriteRenderer;
-    private bool isGrounded;
 
+    private bool isGrounded;
     private float moveInput;
     private bool jumpRequested;
+    private bool isClimbing = false;
 
     private void Awake()
     {
@@ -37,10 +42,12 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         Move();
-
-        // Handle jumping
-        if (jumpRequested && isGrounded)
-        {
+        
+        if (isClimbing) {
+            ClimbLadder();
+        }
+            // Handle jumping
+        if (jumpRequested && isGrounded) {
             Jump();
         }
 
@@ -79,5 +86,38 @@ public class Player : MonoBehaviour
     private void Jump()
     {
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+    }
+
+    // Called when the player enters a ladder trigger
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Ladder"))  // Check if the object is a ladder
+        {
+            isClimbing = true;
+            ladderCollider = other;
+            rb.gravityScale = 0f;  // Disable gravity while climbing
+
+            Physics2D.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("Ground"), true);
+        }
+    }
+
+    // Called when the player exits a ladder trigger
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Ladder"))  // Check if the object is a ladder
+        {
+            isClimbing = false;
+            ladderCollider = null;
+            rb.gravityScale = gravityScale;  // Re-enable gravity when not climbing
+
+            Physics2D.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("Ground"), false);
+        }
+    }
+
+    // Allow the player to climb the ladder
+    private void ClimbLadder()
+    {
+        float verticalInput = Input.GetAxisRaw("Vertical");
+        rb.linearVelocity = new Vector2(rb.linearVelocity.x, verticalInput * climbSpeed);
     }
 }
