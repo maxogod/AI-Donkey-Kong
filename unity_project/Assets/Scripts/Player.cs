@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
     public float slipperyFactor = 0.3f;
     public float climbSpeed = 2f;  // Speed at which the player climbs the ladder
     public float gravityScale = 2.5f;  // Gravity scale of the player
+    public Vector3 spawnPoint = new Vector3(-4.64f, -6.22f, 0);
 
     [Header("Ground Check")]
     public Transform groundCheck;
@@ -28,6 +29,9 @@ public class Player : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+
+        transform.position = spawnPoint;
+        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Barrier"), true);
     }
 
     private void Update()
@@ -60,10 +64,15 @@ public class Player : MonoBehaviour
         moveInput = Input.GetAxisRaw("Horizontal");
 
         // Check if jump is requested
-        if (Input.GetButtonDown("Jump"))
-        {
+        if (Input.GetButtonDown("Jump")) {
             jumpRequested = true;
         }
+
+        #if UNITY_EDITOR
+        if (Input.GetKeyDown(KeyCode.Return)) {
+            transform.position = new Vector3(4, 4, 0); // teleport to top
+        }
+        #endif
     }
 
     private void Move()
@@ -97,7 +106,9 @@ public class Player : MonoBehaviour
             ladderCollider = other;
             rb.gravityScale = 0f;  // Disable gravity while climbing
 
-            Physics2D.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("Ground"), true);
+            Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Ground"), true);
+        } else if (other.CompareTag("WinningArea")) {
+            HandleWin();
         }
     }
 
@@ -110,11 +121,25 @@ public class Player : MonoBehaviour
             ladderCollider = null;
             rb.gravityScale = gravityScale;  // Re-enable gravity when not climbing
 
-            Physics2D.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("Ground"), false);
+            Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Ground"), false);
         }
     }
 
-    // Allow the player to climb the ladder
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Barrel")) {
+            HandleBarrelCollision(collision);
+        }
+    }
+
+    private void HandleBarrelCollision(Collision2D collision) {
+        transform.position = spawnPoint;
+    }
+
+    private void HandleWin() {
+        transform.position = spawnPoint;
+    }
+
     private void ClimbLadder()
     {
         float verticalInput = Input.GetAxisRaw("Vertical");

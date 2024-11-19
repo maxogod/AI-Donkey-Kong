@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 3
   tags:
   - Ladder
+  - WinningArea
   layers:
   - Default
   - TransparentFX
@@ -13,10 +14,10 @@ TagManager:
   - Water
   - UI
   - Ground
-  - 
-  - 
-  - 
-  - 
+  - Player
+  - Barrier
+  - Barrel
+  - WinningArea
   - 
   - 
   - 

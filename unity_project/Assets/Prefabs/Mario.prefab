@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &453258827474011878
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1841206541734421162}
+  m_Layer: 0
+  m_Name: GroundCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1841206541734421162
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 453258827474011878}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.4, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3400806256863342609}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6256701009639369360
 GameObject:
   m_ObjectHideFlags: 0
@@ -13,7 +44,7 @@ GameObject:
   - component: {fileID: 5148989237710963177}
   - component: {fileID: 3205877910188342352}
   - component: {fileID: 7163319586712248396}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Mario
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -29,10 +60,11 @@ Transform:
   m_GameObject: {fileID: 6256701009639369360}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -4.64, y: -6.222, z: 0}
+  m_LocalScale: {x: 0.7750864, y: 0.7750864, z: 0.7750864}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1841206541734421162}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5674548926368401932
@@ -169,7 +201,10 @@ MonoBehaviour:
   moveSpeed: 5
   jumpForce: 10
   slipperyFactor: 0.3
-  groundCheck: {fileID: 0}
+  climbSpeed: 2
+  gravityScale: 2.5
+  spawnPoint: {x: -4.64, y: -6.22, z: 0}
+  groundCheck: {fileID: 1841206541734421162}
   groundCheckDistance: 0.2
   groundLayer:
     serializedVersion: 2
