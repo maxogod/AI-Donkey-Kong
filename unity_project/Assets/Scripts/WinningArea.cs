@@ -5,7 +5,7 @@ public class WinningArea : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D other) {
         if (other.gameObject.layer == LayerMask.NameToLayer("Player")) {
-            Instantiate(effectPrefab, other.transform.position + Vector3.up, Quaternion.identity);
+            Instantiate(effectPrefab, transform.position, Quaternion.identity);
         }
     }
 }

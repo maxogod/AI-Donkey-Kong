@@ -199,10 +199,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
-  jumpForce: 10
+  jumpForce: 7
   slipperyFactor: 0.3
   climbSpeed: 2
-  gravityScale: 2.5
+  gravityScale: 1.5
   spawnPoint: {x: -4.64, y: -6.22, z: 0}
   groundCheck: {fileID: 1841206541734421162}
   groundCheckDistance: 0.2

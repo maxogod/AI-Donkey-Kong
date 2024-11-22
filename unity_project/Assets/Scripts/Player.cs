@@ -4,7 +4,7 @@ public class Player : MonoBehaviour
 {
     [Header("Movement Settings")]
     public float moveSpeed = 3f;
-    public float jumpForce = 1f;
+    public float jumpForce = 0.5f;
     public float slipperyFactor = 0.3f;
     public float climbSpeed = 2f;  // Speed at which the player climbs the ladder
     public float gravityScale = 2.5f;  // Gravity scale of the player
@@ -125,6 +125,10 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void OnBecameInvisible() {
+        Die();
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Barrel")) {
@@ -133,10 +137,14 @@ public class Player : MonoBehaviour
     }
 
     private void HandleBarrelCollision(Collision2D collision) {
-        transform.position = spawnPoint;
+        Die();
     }
 
     private void HandleWin() {
+        transform.position = spawnPoint;
+    }
+
+    private void Die() {
         transform.position = spawnPoint;
     }
 
