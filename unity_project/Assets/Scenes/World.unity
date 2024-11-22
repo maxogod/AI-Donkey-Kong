@@ -224,6 +224,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2736344553055098575, guid: 138121955dd43f44496d9a19a18f1df8, type: 3}
+      propertyPath: m_SpriteTilingProperty.newSize.x
+      value: 1.0261183
+      objectReference: {fileID: 0}
     - target: {fileID: 5674934026957799453, guid: 138121955dd43f44496d9a19a18f1df8, type: 3}
       propertyPath: m_Size.x
       value: 1.0261183
@@ -1216,6 +1220,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -4896216060636748077, guid: 8646d7a1544eca54884ab229a2202174, type: 3}
+      propertyPath: m_BehaviorType
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3400806256863342609, guid: 8646d7a1544eca54884ab229a2202174, type: 3}
       propertyPath: m_LocalPosition.x
       value: -4.64
@@ -1256,6 +1264,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4880885076326832742, guid: 8646d7a1544eca54884ab229a2202174, type: 3}
+      propertyPath: queenTransform
+      value: 
+      objectReference: {fileID: 905854913}
     - target: {fileID: 6256701009639369360, guid: 8646d7a1544eca54884ab229a2202174, type: 3}
       propertyPath: m_Name
       value: Mario
@@ -1975,6 +1987,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2736344553055098575, guid: 138121955dd43f44496d9a19a18f1df8, type: 3}
+      propertyPath: m_SpriteTilingProperty.newSize.x
+      value: 1.0154033
+      objectReference: {fileID: 0}
     - target: {fileID: 5674934026957799453, guid: 138121955dd43f44496d9a19a18f1df8, type: 3}
       propertyPath: m_Size.x
       value: 1.0154033
@@ -2312,6 +2328,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 15992d5cef44a11498dbcb5a700c17d5, type: 3}
+--- !u!4 &905854913 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4748377167247792673, guid: 0be9d8eb32a21ca42a84cb6e2ac37c8c, type: 3}
+  m_PrefabInstance: {fileID: 1600938115}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &906814749
 GameObject:
   m_ObjectHideFlags: 0
