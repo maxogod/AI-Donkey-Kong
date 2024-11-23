@@ -6,6 +6,12 @@ TagManager:
   tags:
   - Ladder
   - WinningArea
+  - JumpBarrelTrigger
+  - zone2
+  - zone3
+  - zone4
+  - zone5
+  - zone6
   layers:
   - Default
   - TransparentFX
@@ -18,8 +24,8 @@ TagManager:
   - Barrier
   - Barrel
   - WinningArea
-  - 
-  - 
+  - JumpBarrelTrigger
+  - Ladder
   - 
   - 
   - 

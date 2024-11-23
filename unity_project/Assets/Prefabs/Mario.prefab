@@ -43,7 +43,6 @@ GameObject:
   - component: {fileID: 5674548926368401932}
   - component: {fileID: 5148989237710963177}
   - component: {fileID: 3205877910188342352}
-  - component: {fileID: 7163319586712248396}
   - component: {fileID: 4880885076326832742}
   - component: {fileID: -4896216060636748077}
   - component: {fileID: -5467376442400681584}
@@ -189,29 +188,6 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.65, y: 1}
   m_Direction: 0
---- !u!114 &7163319586712248396
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6256701009639369360}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 180b09dd2b8d22e419f25140b42e9bdc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 5
-  jumpForce: 7
-  slipperyFactor: 0.3
-  climbSpeed: 2
-  gravityScale: 1.5
-  spawnPoint: {x: -4.64, y: -6.22, z: 0}
-  groundCheck: {fileID: 1841206541734421162}
-  groundCheckDistance: 0.2
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 64
 --- !u!114 &4880885076326832742
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -227,8 +203,30 @@ MonoBehaviour:
   agentParameters:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
-  MaxStep: 0
-  moveSpeed: 5
+  MaxStep: 2000
+  princessTransform: {fileID: 0}
+  ladderContainer: {fileID: 0}
+  barrierContainer: {fileID: 0}
+  barrelContainer: {fileID: 0}
+  maxBarrels: 5
+  maxLadders: 3
+  winReward: 1
+  clibingReward: 0.3
+  jumpBarrelReward: 0.01
+  moveHorizontally: 0.5
+  groundPlayingReward: 0.05
+  baseZoneReward: 0.3
+  reenterZoneReward: -0.3
+  ClimbingDownReward: -0.1
+  jumpTooMuchReward: -0.5
+  idleReward: -0.5
+  dieReward: -1
+  maxLoopsIdle: 300
+  IdleYDistance: 1.8
+  IdleXDistance: 5
+  maxJumps: 5
+  maxGroundedLoops: 100
+  moveSpeed: 3
   jumpForce: 7
   slipperyFactor: 0.3
   climbSpeed: 2
@@ -252,7 +250,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 6
+    VectorObservationSize: 30
     NumStackedVectorObservations: 1
     m_ActionSpec:
       m_NumContinuousActions: 0
@@ -263,7 +261,7 @@ MonoBehaviour:
     hasUpgradedBrainParametersWithActionSpec: 1
   m_Model: {fileID: 0}
   m_InferenceDevice: 0
-  m_BehaviorType: 1
+  m_BehaviorType: 0
   m_BehaviorName: Mario
   TeamId: 0
   m_UseChildSensors: 1

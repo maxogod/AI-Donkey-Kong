@@ -1,0 +1,22 @@
+behaviors:
+    Mario:
+        trainer_type: ppo
+        hyperparameters:
+            batch_size: 256 # Increased for more stable training
+            buffer_size: 1024 # Sufficient for diverse experience storage
+            learning_rate: 3.0e-4 # Standard PPO learning rate
+            epsilon: 0.2 # PPO clipping value
+            lambd: 0.95 # Advantage decay for PPO
+            num_epoch: 4 # More epochs for stability
+            learning_rate_schedule: linear # Smooth learning rate decay
+        network_settings:
+            normalize: true # Normalize input observations
+            hidden_units: 128 # Number of units per layer
+            num_layers: 2 # Two layers should suffice
+        reward_signals:
+            extrinsic:
+                gamma: 0.99 # Discount factor for future rewards
+                strength: 1.0 # Strength of the reward signal
+        max_steps: 50000 # Total steps for training
+        time_horizon: 64 # Frequency of decisions
+        summary_freq: 10000 # Log training summaries every 10,000 steps
