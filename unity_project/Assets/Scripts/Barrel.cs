@@ -31,8 +31,7 @@ public class Barrel : MonoBehaviour {
     }
 
     private void OnCollisionEnter2D(Collision2D collision) {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Player") ||
-            collision.gameObject.layer == LayerMask.NameToLayer("Barrel")) {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Barrel")) {
             Destroy(gameObject);
         }
     }
