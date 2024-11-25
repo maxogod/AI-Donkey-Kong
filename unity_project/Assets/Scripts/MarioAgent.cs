@@ -52,7 +52,7 @@ public class MarioAgent : Agent {
     public float slipperyFactor = 0.3f;
     public float climbSpeed = 2f;
     public float gravityScale = 1.5f;
-    public Vector3 spawnPoint = new Vector3(-4.64f, -6.22f, 0);
+    public Vector2 spawnPoint = new Vector2(-4.64f, -6.22f);
 
     [Header("Ground Check")]
     public Transform groundCheck;
@@ -64,6 +64,8 @@ public class MarioAgent : Agent {
     private SpriteRenderer spriteRenderer;
 
     private Collider2D ladderCollider;
+    private Collider2D[] floorColliders = new Collider2D[0];
+
     private bool isGrounded;
     private float moveInput;
     private bool isClimbing = false;
@@ -74,6 +76,7 @@ public class MarioAgent : Agent {
     private int loopIdle = 0;
     // private int jumpsCount = 0;
     private float highestPosY = -10f;
+    private float nextZoneDistance = 100f;
 
     // private int initialMoves = 0;
     // private float maxInitialMoves = 50;
@@ -94,7 +97,7 @@ public class MarioAgent : Agent {
         spriteRenderer = GetComponent<SpriteRenderer>();
 
         isTeleporting = true;
-        transform.position = spawnPoint;
+        transform.position = new Vector3(spawnPoint.x, spawnPoint.y, transform.position.z);
         Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Barrier"), true);
         Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Player"), true);
     }
@@ -105,9 +108,9 @@ public class MarioAgent : Agent {
     }
 
     public override void OnEpisodeBegin() {
-        // foreach (Transform barrel in barrelContainer) {
-        //     if (barrel) Destroy(barrel.gameObject);
-        // }
+        foreach (Transform barrel in barrelContainer) {
+            if (barrel) Destroy(barrel.gameObject);
+        }
         // Reset the agent to its initial state
         ResetAgent();
     }
@@ -120,9 +123,7 @@ public class MarioAgent : Agent {
         sensor.AddObservation(isGrounded ? 1 : 0); // 1 obs
         sensor.AddObservation(isClimbing ? 1 : 0); // 1 obs
 
-        Vector2 princessPosition = princessTransform ? princessTransform.position : Vector2.up*10;
-        sensor.AddObservation((princessPosition.y - MarioPosition.y) / maxDistance); // 1 obs
-
+        CollectClosestZoneObservation(sensor); // 1 obs
         CollectLadderObservations(sensor); // 1 obs
         CollectBarrierObservations(sensor); // 2 obs
         CollectBarrelObservations(sensor); // 6 obs
@@ -188,8 +189,13 @@ public class MarioAgent : Agent {
 
         if (transform.position.y > highestPosY) {
             highestPosY = transform.position.y;
-            AddCustomReward(0.05f);
+            float base_highscore_reward = 0.02f;
+            // scale the reward based on the distance from the princess
+            float progress = Mathf.Clamp(1f - ((princessTransform.position.y - transform.position.y) / maxDistance), 0f, 1f);
+            base_highscore_reward = base_highscore_reward * progress;
+            AddCustomReward(base_highscore_reward);
         }
+
     }
 
     public override void Heuristic(in ActionBuffers actionsOut) {
@@ -214,7 +220,7 @@ public class MarioAgent : Agent {
         #if UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.Return)) {
             isTeleporting = true;
-            transform.position = new Vector3(4, 4, 0); // teleport to top
+            transform.position = new Vector3(4, 4, transform.position.z); // teleport to top
         }
         #endif
     }
@@ -315,10 +321,10 @@ public class MarioAgent : Agent {
             rb.gravityScale = 0f;  // Disable gravity while climbing
             rb.linearVelocity = Vector2.zero;
 
-            Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Ground"), true);
+            IgnoreFloorCollisions();
         } else if (other.CompareTag("WinningArea")) {
             HandleWin();
-        } else if (other.CompareTag("Barrel")) {
+        } else if (other.CompareTag("Barrel") && Mathf.Abs(transform.position.z - other.transform.position.z) < 0.1f) {
             Die();
         } else if (other.CompareTag("JumpBarrelTrigger") && !isTeleporting && marioCollider.bounds.min.y > other.bounds.min.y -0.3f) {
             AddCustomReward(jumpBarrelReward);
@@ -345,7 +351,7 @@ public class MarioAgent : Agent {
             ladderCollider = null;
             rb.gravityScale = gravityScale;  // Re-enable gravity when not climbing
 
-            Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Ground"), false);
+            IgnoreFloorCollisions();
         }
     }
 
@@ -360,15 +366,29 @@ public class MarioAgent : Agent {
     private void CheckZones(Collider2D other) {
         if (visitedZones.ContainsKey(other.name)) {
             if (visitedZones[other.name].Item1) {
-                AddCustomReward((reenterZoneReward - visitedZones[other.name].Item2));
-                visitedZones[other.name] = new Tuple<bool, float>(false, visitedZones[other.name].Item2);
-                Debug.Log("[Penalty] Reenter " + other.name);
+                // AddCustomReward((reenterZoneReward - visitedZones[other.name].Item2));
+                // visitedZones[other.name] = new Tuple<bool, float>(false, visitedZones[other.name].Item2);
+                // Debug.Log("[Penalty] Reenter " + other.name);
             } else {
                 AddCustomReward(baseZoneReward + visitedZones[other.name].Item2);
                 visitedZones[other.name] = new Tuple<bool, float>(true, visitedZones[other.name].Item2);
                 Debug.Log("[Reward] " + other.name);
             }
         }
+    }
+
+    private void CollectClosestZoneObservation(VectorSensor sensor) {
+        float closestDistanceY = 100f;
+        foreach (KeyValuePair<string, Tuple<bool, float>> zone in visitedZones) {
+            if (zone.Value.Item1) continue;
+            GameObject zoneObject = GameObject.Find(zone.Key);
+            float distanceY = Mathf.Abs(zoneObject.transform.position.y - transform.position.y);
+            if (distanceY < closestDistanceY) {
+                closestDistanceY = distanceY;
+                nextZoneDistance = Vector2.Distance(zoneObject.transform.position, transform.position) / maxDistance;
+            }
+        }
+        sensor.AddObservation(nextZoneDistance);
     }
 
     private void CollectLadderObservations(VectorSensor sensor) {
@@ -437,7 +457,7 @@ public class MarioAgent : Agent {
     }
 
     private void ResetAgent() {
-        transform.position = spawnPoint;
+        transform.position = new Vector3(spawnPoint.x, spawnPoint.y, transform.position.z);
         // jumpsCount = 0;
         loopIdle = 0;
         lastPositionY = transform.position.y;
@@ -457,5 +477,28 @@ public class MarioAgent : Agent {
     private void AddCustomReward(float reward) {
         // Add a reward to the agent (maybe relative to time playing eventually)
         AddReward(reward);
+    }
+
+    private void IgnoreFloorCollisions() {
+        if (floorColliders.Length == 0) {
+            floorColliders = Physics2D.OverlapCircleAll(transform.position, groundCheckDistance*8, groundLayer);
+            foreach (var floorCollider in floorColliders) {
+                if (floorCollider) {
+                    Physics2D.IgnoreCollision(marioCollider, floorCollider, true);
+                }
+            }
+        } else {
+            foreach (var floorCollider in floorColliders) {
+                if (floorCollider) {
+                    Physics2D.IgnoreCollision(marioCollider, floorCollider, false);
+                }
+            }
+            floorColliders = new Collider2D[0];
+        }
+    }
+
+    private void OnDrawGizmos() {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, groundCheckDistance*8);
     }
 }
