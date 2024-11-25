@@ -36,12 +36,12 @@ public class MarioAgent : Agent {
     public float reenterZoneReward = -0.5f;
     public float ClimbingDownReward = -0.1f;
     public float jumpTooMuchReward = -0.05f;
-    public float idleReward = -0.4f;
+    public float idleReward = -0.2f;
     public float dieReward = -1.0f;
     public float fallOffReward = -1.0f;
 
     [Header("Penalty Settings")]
-    public float maxLoopsIdle = 300;
+    public float maxLoopsIdle = 350;
     public float IdleYDistance = 1.8f;
     public float IdleXDistance = 5.0f;
     public float maxJumps = 5;
@@ -72,19 +72,21 @@ public class MarioAgent : Agent {
     private float lastPositionY;
     private float lastPositionX;
     private int loopIdle = 0;
-    private int jumpsCount = 0;
+    // private int jumpsCount = 0;
     private float highestPosY = -10f;
 
-    private int initialMoves = 0;
-    private float maxInitialMoves = 50;
-    private int initialClimbMoves = 0;
-    private float maxInitialClimbMoves = 20;
+    // private int initialMoves = 0;
+    // private float maxInitialMoves = 50;
+    // private int initialClimbMoves = 0;
+    // private float maxInitialClimbMoves = 20;
 
     private float lastCheckpointX; // updates every time it moves horizontally to a new checkpoint
     // visited zones <name, <visited, additional_reward>
     private Dictionary<string, Tuple<bool, float>> visitedZones;
 
-    private float world_bottom = -10f;
+    // private float world_bottom = -10f;
+    private float maxDistance = 12.5f;
+    private float maxSpeed = 8.5f;
 
     public override void Initialize() {
         rb = GetComponent<Rigidbody2D>();
@@ -113,13 +115,13 @@ public class MarioAgent : Agent {
     public override void CollectObservations(VectorSensor sensor) {
         // Data that agent needs to evaluate the environment
         Vector2 MarioPosition = transform ? transform.position : Vector2.zero;
-        sensor.AddObservation(MarioPosition); // 2 obs
-        sensor.AddObservation(rb.linearVelocity); // 2 obs
+        sensor.AddObservation(MarioPosition / maxDistance); // 2 obs
+        sensor.AddObservation(rb.linearVelocity / maxSpeed); // 2 obs
         sensor.AddObservation(isGrounded ? 1 : 0); // 1 obs
         sensor.AddObservation(isClimbing ? 1 : 0); // 1 obs
 
         Vector2 princessPosition = princessTransform ? princessTransform.position : Vector2.up*10;
-        sensor.AddObservation(princessPosition.y - MarioPosition.y); // 1 obs
+        sensor.AddObservation((princessPosition.y - MarioPosition.y) / maxDistance); // 1 obs
 
         CollectLadderObservations(sensor); // 1 obs
         CollectBarrierObservations(sensor); // 2 obs
@@ -144,6 +146,13 @@ public class MarioAgent : Agent {
         CheckIdle();
 
         int horizontalAction = actions.DiscreteActions[0];
+        int verticalAction = actions.DiscreteActions[1];
+
+        if (UnityEngine.Random.Range(0f, 1f) < 0.05f) { // 5% of the time, take a random action
+            horizontalAction = UnityEngine.Random.Range(0, 3);
+            verticalAction = UnityEngine.Random.Range(0, 4);
+        }
+
         switch (horizontalAction) {
             case (int) MarioActions.DoNothing:
                 Move(0);
@@ -159,7 +168,6 @@ public class MarioAgent : Agent {
                 break;
         }
 
-        int verticalAction = actions.DiscreteActions[1];
         switch (verticalAction) {
             case (int) MarioActions.DoNothing:
                 ClimbLadder(0);
@@ -180,6 +188,7 @@ public class MarioAgent : Agent {
 
         if (transform.position.y > highestPosY) {
             highestPosY = transform.position.y;
+            AddCustomReward(0.05f);
         }
     }
 
@@ -262,7 +271,10 @@ public class MarioAgent : Agent {
 
     private void Die() {
         isTeleporting = true;
-        AddCustomReward(dieReward);
+
+        float progress = Mathf.Clamp(1f - (Vector2.Distance(transform.position, princessTransform.position) / maxDistance), 0f, 1f);
+        float scaledDiePenalty = dieReward * (1f - progress); // Smaller penalty if further from the princess
+        AddCustomReward(scaledDiePenalty);
         Debug.Log("[Penalty] Die");
 
         Debug.Log("Reward: " + GetCumulativeReward());
@@ -365,14 +377,14 @@ public class MarioAgent : Agent {
         float closestDistanceY = 100f;
         foreach (Transform ladder in ladderContainer) {
             if (!ladder) continue;
-            ladderDistanceY = Mathf.Abs(ladder.position.y - transform.position.y);
-            topOfLadder = ladder.position.y + 0.5f;
+            float ladderDistanceY = Mathf.Abs(ladder.position.y - transform.position.y);
+            float topOfLadder = ladder.position.y + 0.5f;
 
             if (ladderDistanceY <= closestDistanceY && topOfLadder > transform.position.y) {
                 ladderDistanceX = ladder.position.x - transform.position.x;
             }
         }
-        AddObservation(ladderDistanceX);
+        sensor.AddObservation(ladderDistanceX / maxDistance);
     }
 
     private void CollectBarrelObservations(VectorSensor sensor) {
@@ -387,11 +399,11 @@ public class MarioAgent : Agent {
             Transform barrel = barrels[i];
             if (!barrel) continue;
             float relativePosition = barrel.position.x - transform.position.x;
-            sensor.AddObservation(relativePosition);
+            sensor.AddObservation(relativePosition / maxDistance);
 
             Rigidbody2D barrel_rb = barrel.GetComponent<Rigidbody2D>();
             if (barrel_rb) {
-                sensor.AddObservation(barrel_rb.linearVelocity.x);
+                sensor.AddObservation(barrel_rb.linearVelocity.x / maxSpeed);
             }
         }
 
@@ -407,7 +419,7 @@ public class MarioAgent : Agent {
         foreach (Transform barrier in barrierContainer) {
             if (!barrier) continue;
             float barrier_x = barrier.position.x;
-            sensor.AddObservation(barrier_x);
+            sensor.AddObservation((barrier_x - transform.position.x) / maxDistance);
         }
     }
 
@@ -426,7 +438,7 @@ public class MarioAgent : Agent {
 
     private void ResetAgent() {
         transform.position = spawnPoint;
-        jumpsCount = 0;
+        // jumpsCount = 0;
         loopIdle = 0;
         lastPositionY = transform.position.y;
         lastPositionX = transform.position.x;

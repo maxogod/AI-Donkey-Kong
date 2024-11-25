@@ -209,7 +209,6 @@ MonoBehaviour:
   barrierContainer: {fileID: 0}
   barrelContainer: {fileID: 0}
   maxBarrels: 3
-  maxLadders: 3
   winReward: 2
   climbingReward: 0.5
   jumpBarrelReward: 0.1
@@ -249,7 +248,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 30
+    VectorObservationSize: 16
     NumStackedVectorObservations: 1
     m_ActionSpec:
       m_NumContinuousActions: 0
@@ -258,7 +257,7 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 0}
+  m_Model: {fileID: 5022602860645237092, guid: 5788357c11fb4504dad30115fb04edd7, type: 3}
   m_InferenceDevice: 0
   m_BehaviorType: 0
   m_BehaviorName: Mario
