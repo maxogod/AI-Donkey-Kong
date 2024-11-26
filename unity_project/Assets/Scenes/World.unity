@@ -603,7 +603,7 @@ GameObject:
   - component: {fileID: 249191930}
   - component: {fileID: 249191931}
   m_Layer: 0
-  m_Name: Zone6 (1)
+  m_Name: Zone6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1348,7 +1348,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 6.7493086, y: 0.6194418}
+  m_Offset: {x: 6.1186223, y: 0.79392755}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -1358,7 +1358,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 3.5713997, y: 1.8864325}
+  m_Size: {x: 4.8327723, y: 1.537461}
   m_EdgeRadius: 0
 --- !u!4 &354957535 stripped
 Transform:
@@ -4149,7 +4149,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 4.267312, y: 0.4990008}
+  m_Offset: {x: 4.124631, y: 0.4990008}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -4159,7 +4159,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 3.3483634, y: 1.8690953}
+  m_Size: {x: 3.0630062, y: 1.8690953}
   m_EdgeRadius: 0
 --- !u!4 &1091997911 stripped
 Transform:
@@ -5028,7 +5028,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 6.805623, y: 0.53775394}
+  m_Offset: {x: 6.9223027, y: 0.53775394}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -5038,7 +5038,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 2.0236478, y: 1.5333693}
+  m_Size: {x: 2.2570066, y: 1.5333693}
   m_EdgeRadius: 0
 --- !u!1001 &1250234375
 PrefabInstance:

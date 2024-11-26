@@ -203,7 +203,7 @@ MonoBehaviour:
   agentParameters:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
-  MaxStep: 2000
+  MaxStep: 3000
   princessTransform: {fileID: 0}
   ladderContainer: {fileID: 0}
   barrierContainer: {fileID: 0}
@@ -211,8 +211,8 @@ MonoBehaviour:
   maxBarrels: 3
   winReward: 2
   climbingReward: 0.5
-  jumpBarrelReward: 0.1
-  moveHorizontally: 0.4
+  jumpBarrelReward: 0.07
+  moveHorizontally: 0.2
   baseZoneReward: 0.5
   reenterZoneReward: -0.5
   ClimbingDownReward: -0.1
@@ -222,7 +222,7 @@ MonoBehaviour:
   fallOffReward: -1
   maxLoopsIdle: 300
   IdleYDistance: 1.8
-  IdleXDistance: 5
+  IdleXDistance: 5.5
   maxJumps: 5
   moveSpeed: 3
   jumpForce: 7

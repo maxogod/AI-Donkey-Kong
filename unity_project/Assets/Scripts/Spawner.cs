@@ -4,8 +4,8 @@ public class Spawner : MonoBehaviour {
     public Transform barrelContainer;
     public Transform barrelSpawnPoint;
     public GameObject prefabToSpawn;
-    public float minSpawnTime = 3f;
-    public float maxSpawnTime = 6f;
+    public float minSpawnTime = 6f;
+    public float maxSpawnTime = 8f;
     public bool makeInvisible = false;
 
     private void Start() {

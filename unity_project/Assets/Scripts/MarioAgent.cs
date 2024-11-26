@@ -30,8 +30,8 @@ public class MarioAgent : Agent {
     [Header("Rewards")]
     public float winReward = 2.0f;
     public float climbingReward = 0.5f;
-    public float jumpBarrelReward = 0.1f;
-    public float moveHorizontally = 0.4f;
+    public float jumpBarrelReward = 0.07f;
+    public float moveHorizontally = 0.2f;
     public float baseZoneReward = 0.5f;
     public float reenterZoneReward = -0.5f;
     public float ClimbingDownReward = -0.1f;
@@ -43,7 +43,7 @@ public class MarioAgent : Agent {
     [Header("Penalty Settings")]
     public float maxLoopsIdle = 350;
     public float IdleYDistance = 1.8f;
-    public float IdleXDistance = 5.0f;
+    public float IdleXDistance = 5.5f;
     public float maxJumps = 5;
 
     [Header("Movement Settings")]
@@ -77,6 +77,8 @@ public class MarioAgent : Agent {
     // private int jumpsCount = 0;
     private float highestPosY = -10f;
     private float nextZoneDistance = 100f;
+    private int scaleRewardIfMovingSide = 0;
+    private int prioritizeMovingLeft = 0;
 
     // private int initialMoves = 0;
     // private float maxInitialMoves = 50;
@@ -154,6 +156,12 @@ public class MarioAgent : Agent {
             verticalAction = UnityEngine.Random.Range(0, 4);
         }
 
+        if (prioritizeMovingLeft > 0) {
+            MoveLeft();
+            prioritizeMovingLeft--;
+            return;
+        }
+
         switch (horizontalAction) {
             case (int) MarioActions.DoNothing:
                 Move(0);
@@ -228,11 +236,25 @@ public class MarioAgent : Agent {
     private void MoveRight() {
         spriteRenderer.flipX = false;
         Move(1);
+        if (scaleRewardIfMovingSide > 0) {
+            AddCustomReward(0.2f);
+            Debug.Log("[Reward] Move Right");
+        } else if (scaleRewardIfMovingSide < 0) {
+            AddCustomReward(-0.3f);
+            Debug.Log("[Penalty] Move Right");
+        }
     }
 
     private void MoveLeft() {
         spriteRenderer.flipX = true;
         Move(-1);
+        if (scaleRewardIfMovingSide < 0) {
+            AddCustomReward(0.2f);
+            Debug.Log("[Reward] Move Left");
+        } else if (scaleRewardIfMovingSide > 0) {
+            AddCustomReward(-0.3f);
+            Debug.Log("[Penalty] Move Left");
+        }
     }
 
     private void Move(int moveInput) {
@@ -339,10 +361,10 @@ public class MarioAgent : Agent {
 
             float marioTopBound = marioCollider.bounds.max.y;
             float ladderTopBound = ladderCollider.bounds.max.y;
-            if (marioTopBound > ladderTopBound) {
+            if (marioTopBound > ladderTopBound && ladderTopBound > highestPosY) {
                 AddCustomReward(climbingReward);
                 Debug.Log("[Reward] Climbing Up");
-            } else if (ladderTopBound < highestPosY) {
+            } else if (marioTopBound < ladderTopBound && ladderTopBound < highestPosY) {
                 AddCustomReward(ClimbingDownReward);
                 Debug.Log("[Penalty] Climbing Down");
             }
@@ -352,6 +374,8 @@ public class MarioAgent : Agent {
             rb.gravityScale = gravityScale;  // Re-enable gravity when not climbing
 
             IgnoreFloorCollisions();
+        } else if (visitedZones.ContainsKey(other.name)) {
+            scaleRewardIfMovingSide = 0;
         }
     }
 
@@ -366,13 +390,21 @@ public class MarioAgent : Agent {
     private void CheckZones(Collider2D other) {
         if (visitedZones.ContainsKey(other.name)) {
             if (visitedZones[other.name].Item1) {
-                // AddCustomReward((reenterZoneReward - visitedZones[other.name].Item2));
-                // visitedZones[other.name] = new Tuple<bool, float>(false, visitedZones[other.name].Item2);
-                // Debug.Log("[Penalty] Reenter " + other.name);
+                AddCustomReward((reenterZoneReward - visitedZones[other.name].Item2));
+                visitedZones[other.name] = new Tuple<bool, float>(false, visitedZones[other.name].Item2);
+                Debug.Log("[Penalty] Reenter " + other.name);
             } else {
                 AddCustomReward(baseZoneReward + visitedZones[other.name].Item2);
                 visitedZones[other.name] = new Tuple<bool, float>(true, visitedZones[other.name].Item2);
                 Debug.Log("[Reward] " + other.name);
+                if (other.name == "Zone6") {
+                    scaleRewardIfMovingSide = 0;
+                } else if (other.name == "Zone2") {
+                    scaleRewardIfMovingSide = -1;
+                    prioritizeMovingLeft = 80;
+                } else {
+                    scaleRewardIfMovingSide = -scaleRewardIfMovingSide;
+                }
             }
         }
     }

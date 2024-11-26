@@ -182,5 +182,6 @@ MonoBehaviour:
   barrelContainer: {fileID: 0}
   barrelSpawnPoint: {fileID: 3302195732622685671}
   prefabToSpawn: {fileID: 2167466792188148364, guid: 435650806f692a24dbfd41d37db418a3, type: 3}
-  minSpawnTime: 3
-  maxSpawnTime: 6
+  minSpawnTime: 6
+  maxSpawnTime: 8
+  makeInvisible: 0
