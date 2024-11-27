@@ -134,7 +134,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &6862736
 Transform:
   m_ObjectHideFlags: 0
@@ -410,7 +410,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &117395025
 Transform:
   m_ObjectHideFlags: 0
@@ -983,6 +983,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Provisory
       objectReference: {fileID: 0}
+    - target: {fileID: 1011508621841453916, guid: 15992d5cef44a11498dbcb5a700c17d5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1315010601001991143, guid: 15992d5cef44a11498dbcb5a700c17d5, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.7500796
@@ -1069,7 +1073,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &306537285
 Transform:
   m_ObjectHideFlags: 0
@@ -1470,7 +1474,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.45322692, y: -0.06525421}
+  m_Offset: {x: 0.3926525, y: -0.012337923}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -1480,7 +1484,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1.9064538, y: 1.1305084}
+  m_Size: {x: 1.785305, y: 1.0246758}
   m_EdgeRadius: 0
 --- !u!4 &368110550
 Transform:
@@ -2087,7 +2091,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &626920796
 Transform:
   m_ObjectHideFlags: 0
@@ -2215,7 +2219,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &678164811
 Transform:
   m_ObjectHideFlags: 0
@@ -3522,11 +3526,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1315010601001991143, guid: 15992d5cef44a11498dbcb5a700c17d5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 7.654559
+      value: 6.23
       objectReference: {fileID: 0}
     - target: {fileID: 1315010601001991143, guid: 15992d5cef44a11498dbcb5a700c17d5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 8.331994
+      value: 8.3318
       objectReference: {fileID: 0}
     - target: {fileID: 1315010601001991143, guid: 15992d5cef44a11498dbcb5a700c17d5, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3562,11 +3566,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2359553272862740800, guid: 15992d5cef44a11498dbcb5a700c17d5, type: 3}
       propertyPath: m_Size.y
-      value: 0.8377253
+      value: 0.88123655
       objectReference: {fileID: 0}
     - target: {fileID: 2359553272862740800, guid: 15992d5cef44a11498dbcb5a700c17d5, type: 3}
       propertyPath: m_Offset.y
-      value: 0.6811374
+      value: 0.61289215
+      objectReference: {fileID: 0}
+    - target: {fileID: 2359553272862740800, guid: 15992d5cef44a11498dbcb5a700c17d5, type: 3}
+      propertyPath: m_SpriteTilingProperty.newSize.y
+      value: 1.1697564
+      objectReference: {fileID: 0}
+    - target: {fileID: 7394394430997042482, guid: 15992d5cef44a11498dbcb5a700c17d5, type: 3}
+      propertyPath: m_Size.y
+      value: 1.1697564
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3833,7 +3845,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1049264350
 Transform:
   m_ObjectHideFlags: 0
@@ -4702,7 +4714,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1418854408411736932, guid: 138121955dd43f44496d9a19a18f1df8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.9999797
+      value: 3.01
       objectReference: {fileID: 0}
     - target: {fileID: 1418854408411736932, guid: 138121955dd43f44496d9a19a18f1df8, type: 3}
       propertyPath: m_LocalPosition.y
@@ -4746,11 +4758,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2736344553055098575, guid: 138121955dd43f44496d9a19a18f1df8, type: 3}
       propertyPath: m_SpriteTilingProperty.newSize.x
-      value: 2.955039
+      value: 2.975027
       objectReference: {fileID: 0}
     - target: {fileID: 5674934026957799453, guid: 138121955dd43f44496d9a19a18f1df8, type: 3}
       propertyPath: m_Size.x
-      value: 2.955039
+      value: 2.975027
       objectReference: {fileID: 0}
     - target: {fileID: 7517038725860355263, guid: 138121955dd43f44496d9a19a18f1df8, type: 3}
       propertyPath: m_Name
@@ -4943,7 +4955,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1218025285
 Transform:
   m_ObjectHideFlags: 0
@@ -6488,7 +6500,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1561224014
 Transform:
   m_ObjectHideFlags: 0
@@ -8064,7 +8076,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1958229818
 Transform:
   m_ObjectHideFlags: 0

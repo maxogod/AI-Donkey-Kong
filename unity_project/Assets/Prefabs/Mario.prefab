@@ -139,7 +139,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0.05
-  m_GravityScale: 2.5
+  m_GravityScale: 1.5
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -211,7 +211,7 @@ MonoBehaviour:
   maxBarrels: 3
   winReward: 2
   climbingReward: 0.5
-  jumpBarrelReward: 0.07
+  jumpBarrelReward: 0.15
   moveHorizontally: 0.2
   baseZoneReward: 0.5
   reenterZoneReward: -0.5

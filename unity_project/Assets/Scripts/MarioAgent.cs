@@ -30,7 +30,7 @@ public class MarioAgent : Agent {
     [Header("Rewards")]
     public float winReward = 2.0f;
     public float climbingReward = 0.5f;
-    public float jumpBarrelReward = 0.07f;
+    public float jumpBarrelReward = 0.15f;
     public float moveHorizontally = 0.2f;
     public float baseZoneReward = 0.5f;
     public float reenterZoneReward = -0.5f;
@@ -155,6 +155,7 @@ public class MarioAgent : Agent {
 
         switch (action) {
             case (int) MarioActions.DoNothing:
+                ClimbLadder(0);
                 Move(0);
                 break;
             case (int) MarioActions.MoveRight:
@@ -168,11 +169,11 @@ public class MarioAgent : Agent {
                 break;
             case (int) MarioActions.LadderUp:
                 Move(0);
-                LadderUp();
+                ClimbLadder(1);
                 break;
             case (int) MarioActions.LadderDown:
                 Move(0);
-                LadderDown();
+                ClimbLadder(-1);
                 break;
             default:
                 Debug.LogError("Invalid action");
@@ -233,8 +234,8 @@ public class MarioAgent : Agent {
 
     private void Jump() {
         if (!isGrounded || isClimbing) return;
-        AddCustomReward(jumpTooMuchReward);
-        Debug.Log("[Penalty] Jump");
+        // AddCustomReward(jumpTooMuchReward);
+        // Debug.Log("[Penalty] Jump");
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
         // jumpsCount++;
         // if (jumpsCount > maxJumps) {
@@ -321,7 +322,7 @@ public class MarioAgent : Agent {
             HandleWin();
         } else if (other.CompareTag("Barrel") && Mathf.Abs(transform.position.z - other.transform.position.z) < 0.1f) {
             Die();
-        } else if (other.CompareTag("JumpBarrelTrigger") && !isTeleporting && marioCollider.bounds.min.y > other.bounds.min.y -0.3f) {
+        } else if (other.CompareTag("JumpBarrelTrigger") && !isTeleporting && marioCollider.bounds.min.y > other.bounds.min.y -0.3f && Mathf.Abs(transform.position.z - other.transform.position.z) <= 0.1f) {
             AddCustomReward(jumpBarrelReward);
             Debug.Log("[Reward] Jump Barrel");
         }
