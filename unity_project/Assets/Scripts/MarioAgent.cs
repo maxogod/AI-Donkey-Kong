@@ -65,20 +65,19 @@ public class MarioAgent : Agent {
 
     private Collider2D ladderCollider;
     private Collider2D[] floorColliders = new Collider2D[0];
+    private float closestLadder = 100;
 
     private bool isGrounded;
     private float moveInput;
     private bool isClimbing = false;
     private bool isTeleporting = false;
     private bool isQuiting = false;
-    private float lastPositionY;
-    private float lastPositionX;
+    private float lastPositionY = -6.22f;
+    private float lastPositionX = -4.64f;
     private int loopIdle = 0;
     // private int jumpsCount = 0;
     private float highestPosY = -10f;
     private float nextZoneDistance = 100f;
-    private int scaleRewardIfMovingSide = 0;
-    private int prioritizeMovingLeft = 0;
 
     // private int initialMoves = 0;
     // private float maxInitialMoves = 50;
@@ -156,12 +155,6 @@ public class MarioAgent : Agent {
             verticalAction = UnityEngine.Random.Range(0, 4);
         }
 
-        if (prioritizeMovingLeft > 0) {
-            MoveLeft();
-            prioritizeMovingLeft--;
-            return;
-        }
-
         switch (horizontalAction) {
             case (int) MarioActions.DoNothing:
                 Move(0);
@@ -236,25 +229,11 @@ public class MarioAgent : Agent {
     private void MoveRight() {
         spriteRenderer.flipX = false;
         Move(1);
-        if (scaleRewardIfMovingSide > 0) {
-            AddCustomReward(0.2f);
-            Debug.Log("[Reward] Move Right");
-        } else if (scaleRewardIfMovingSide < 0) {
-            AddCustomReward(-0.3f);
-            Debug.Log("[Penalty] Move Right");
-        }
     }
 
     private void MoveLeft() {
         spriteRenderer.flipX = true;
         Move(-1);
-        if (scaleRewardIfMovingSide < 0) {
-            AddCustomReward(0.2f);
-            Debug.Log("[Reward] Move Left");
-        } else if (scaleRewardIfMovingSide > 0) {
-            AddCustomReward(-0.3f);
-            Debug.Log("[Penalty] Move Left");
-        }
     }
 
     private void Move(int moveInput) {
@@ -265,8 +244,8 @@ public class MarioAgent : Agent {
 
     private void Jump() {
         if (!isGrounded || isClimbing) return;
-        AddCustomReward(jumpTooMuchReward);
-        Debug.Log("[Penalty] Jump");
+        // AddCustomReward(jumpTooMuchReward);
+        // Debug.Log("[Penalty] Jump");
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
         // jumpsCount++;
         // if (jumpsCount > maxJumps) {
@@ -343,6 +322,11 @@ public class MarioAgent : Agent {
             rb.gravityScale = 0f;  // Disable gravity while climbing
             rb.linearVelocity = Vector2.zero;
 
+            // if (other.transform.position.y >= highestPosY) {
+            //     AddCustomReward(climbingReward / 2);
+            //     Debug.Log("[Reward] Touch Ladder");
+            // }
+
             IgnoreFloorCollisions();
         } else if (other.CompareTag("WinningArea")) {
             HandleWin();
@@ -374,8 +358,6 @@ public class MarioAgent : Agent {
             rb.gravityScale = gravityScale;  // Re-enable gravity when not climbing
 
             IgnoreFloorCollisions();
-        } else if (visitedZones.ContainsKey(other.name)) {
-            scaleRewardIfMovingSide = 0;
         }
     }
 
@@ -397,14 +379,6 @@ public class MarioAgent : Agent {
                 AddCustomReward(baseZoneReward + visitedZones[other.name].Item2);
                 visitedZones[other.name] = new Tuple<bool, float>(true, visitedZones[other.name].Item2);
                 Debug.Log("[Reward] " + other.name);
-                if (other.name == "Zone6") {
-                    scaleRewardIfMovingSide = 0;
-                } else if (other.name == "Zone2") {
-                    scaleRewardIfMovingSide = -1;
-                    prioritizeMovingLeft = 80;
-                } else {
-                    scaleRewardIfMovingSide = -scaleRewardIfMovingSide;
-                }
             }
         }
     }
@@ -425,7 +399,6 @@ public class MarioAgent : Agent {
 
     private void CollectLadderObservations(VectorSensor sensor) {
         if (!ladderContainer) return;
-        float ladderDistanceX = 0f;
         float closestDistanceY = 100f;
         foreach (Transform ladder in ladderContainer) {
             if (!ladder) continue;
@@ -433,10 +406,11 @@ public class MarioAgent : Agent {
             float topOfLadder = ladder.position.y + 0.5f;
 
             if (ladderDistanceY <= closestDistanceY && topOfLadder > transform.position.y) {
-                ladderDistanceX = ladder.position.x - transform.position.x;
+                closestLadder = Mathf.Abs(ladder.position.x - transform.position.x);
+                closestDistanceY = ladderDistanceY;
             }
         }
-        sensor.AddObservation(ladderDistanceX / maxDistance);
+        sensor.AddObservation(closestLadder / maxDistance);
     }
 
     private void CollectBarrelObservations(VectorSensor sensor) {
@@ -507,7 +481,13 @@ public class MarioAgent : Agent {
     }
 
     private void AddCustomReward(float reward) {
-        // Add a reward to the agent (maybe relative to time playing eventually)
+        // Add a reward to the agent relative to the next ladder
+        
+        float newReward = Mathf.Clamp(reward, -1f, 1f);
+        if (reward < 0) {
+            newReward *= (1f - (closestLadder / maxDistance));
+        }
+        
         AddReward(reward);
     }
 

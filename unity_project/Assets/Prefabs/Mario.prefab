@@ -217,9 +217,9 @@ MonoBehaviour:
   reenterZoneReward: -0.5
   ClimbingDownReward: -0.1
   jumpTooMuchReward: -0.05
-  idleReward: -0.4
+  idleReward: -0.2
   dieReward: -1
-  fallOffReward: -1
+  fallOffReward: -0.5
   maxLoopsIdle: 300
   IdleYDistance: 1.8
   IdleXDistance: 5.5
