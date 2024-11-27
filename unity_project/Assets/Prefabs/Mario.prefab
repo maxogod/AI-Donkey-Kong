@@ -219,8 +219,8 @@ MonoBehaviour:
   jumpTooMuchReward: -0.05
   idleReward: -0.2
   dieReward: -1
-  fallOffReward: -0.5
-  maxLoopsIdle: 300
+  fallOffReward: -1
+  maxLoopsIdle: 350
   IdleYDistance: 1.8
   IdleXDistance: 5.5
   maxJumps: 5
@@ -230,7 +230,7 @@ MonoBehaviour:
   climbSpeed: 2
   gravityScale: 1.5
   spawnPoint: {x: -4.64, y: -6.22}
-  groundCheck: {fileID: 1841206541734421162}
+  groundCheck: {fileID: 0}
   groundCheckDistance: 0.2
   groundLayer:
     serializedVersion: 2

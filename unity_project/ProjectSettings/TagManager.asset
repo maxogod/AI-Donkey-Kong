@@ -13,6 +13,7 @@ TagManager:
   - zone5
   - zone6
   - Barrel
+  - Ground
   layers:
   - Default
   - TransparentFX

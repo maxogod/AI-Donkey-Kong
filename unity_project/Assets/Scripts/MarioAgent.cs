@@ -244,8 +244,8 @@ public class MarioAgent : Agent {
 
     private void Jump() {
         if (!isGrounded || isClimbing) return;
-        // AddCustomReward(jumpTooMuchReward);
-        // Debug.Log("[Penalty] Jump");
+        AddCustomReward(jumpTooMuchReward);
+        Debug.Log("[Penalty] Jump");
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
         // jumpsCount++;
         // if (jumpsCount > maxJumps) {
@@ -279,8 +279,8 @@ public class MarioAgent : Agent {
     private void Die() {
         isTeleporting = true;
 
-        float progress = Mathf.Clamp(1f - (Vector2.Distance(transform.position, princessTransform.position) / maxDistance), 0f, 1f);
-        float scaledDiePenalty = dieReward * (1f - progress); // Smaller penalty if further from the princess
+        float progress = Mathf.Clamp((princessTransform.position.y - highestPosY) / maxDistance, 0f, 1f);
+        float scaledDiePenalty = dieReward * progress; // Smaller penalty if further from the princess
         AddCustomReward(scaledDiePenalty);
         Debug.Log("[Penalty] Die");
 
@@ -372,9 +372,9 @@ public class MarioAgent : Agent {
     private void CheckZones(Collider2D other) {
         if (visitedZones.ContainsKey(other.name)) {
             if (visitedZones[other.name].Item1) {
-                AddCustomReward((reenterZoneReward - visitedZones[other.name].Item2));
-                visitedZones[other.name] = new Tuple<bool, float>(false, visitedZones[other.name].Item2);
-                Debug.Log("[Penalty] Reenter " + other.name);
+                // AddCustomReward((reenterZoneReward - visitedZones[other.name].Item2));
+                // visitedZones[other.name] = new Tuple<bool, float>(false, visitedZones[other.name].Item2);
+                // Debug.Log("[Penalty] Reenter " + other.name);
             } else {
                 AddCustomReward(baseZoneReward + visitedZones[other.name].Item2);
                 visitedZones[other.name] = new Tuple<bool, float>(true, visitedZones[other.name].Item2);
@@ -480,15 +480,15 @@ public class MarioAgent : Agent {
         };
     }
 
-    private void AddCustomReward(float reward) {
+    private void AddCustomReward(float reward, bool relative = false) {
         // Add a reward to the agent relative to the next ladder
         
         float newReward = Mathf.Clamp(reward, -1f, 1f);
-        if (reward < 0) {
-            newReward *= (1f - (closestLadder / maxDistance));
+        if (relative) {
+            newReward *= Mathf.Clamp(closestLadder / maxDistance, 0f, 1f);
         }
         
-        AddReward(reward);
+        AddReward(newReward);
     }
 
     private void IgnoreFloorCollisions() {
