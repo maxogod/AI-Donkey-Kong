@@ -217,7 +217,7 @@ MonoBehaviour:
   reenterZoneReward: -0.5
   ClimbingDownReward: -0.1
   jumpTooMuchReward: -0.05
-  idleReward: -0.2
+  idleReward: -0.25
   dieReward: -1
   fallOffReward: -1
   maxLoopsIdle: 350
@@ -252,8 +252,8 @@ MonoBehaviour:
     NumStackedVectorObservations: 1
     m_ActionSpec:
       m_NumContinuousActions: 0
-      BranchSizes: 0300000004000000
-    VectorActionSize: 0300000004000000
+      BranchSizes: 06000000
+    VectorActionSize: 06000000
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1

@@ -13,9 +13,9 @@ public enum MarioActions : int {
     MoveLeft = 2,
 
     // Vertical branch
-    Jump = 1,
-    LadderUp = 2,
-    LadderDown = 3
+    Jump = 3,
+    LadderUp = 4,
+    LadderDown = 5
 }
 
 public class MarioAgent : Agent {
@@ -36,7 +36,7 @@ public class MarioAgent : Agent {
     public float reenterZoneReward = -0.5f;
     public float ClimbingDownReward = -0.1f;
     public float jumpTooMuchReward = -0.05f;
-    public float idleReward = -0.2f;
+    public float idleReward = -0.25f;
     public float dieReward = -1.0f;
     public float fallOffReward = -1.0f;
 
@@ -147,15 +147,13 @@ public class MarioAgent : Agent {
 
         CheckIdle();
 
-        int horizontalAction = actions.DiscreteActions[0];
-        int verticalAction = actions.DiscreteActions[1];
+        int action = actions.DiscreteActions[0];
 
-        if (UnityEngine.Random.Range(0f, 1f) < 0.05f) { // 5% of the time, take a random action
-            horizontalAction = UnityEngine.Random.Range(0, 3);
-            verticalAction = UnityEngine.Random.Range(0, 4);
-        }
+        // if (UnityEngine.Random.Range(0f, 1f) < 0.05f) { // 5% of the time, take a random action
+        //     action = UnityEngine.Random.Range(0, 3);
+        // }
 
-        switch (horizontalAction) {
+        switch (action) {
             case (int) MarioActions.DoNothing:
                 Move(0);
                 break;
@@ -165,22 +163,15 @@ public class MarioAgent : Agent {
             case (int) MarioActions.MoveLeft:
                 MoveLeft();
                 break;
-            default:
-                Debug.LogError("Invalid action");
-                break;
-        }
-
-        switch (verticalAction) {
-            case (int) MarioActions.DoNothing:
-                ClimbLadder(0);
-                break;
             case (int) MarioActions.Jump:
                 Jump();
                 break;
             case (int) MarioActions.LadderUp:
+                Move(0);
                 LadderUp();
                 break;
             case (int) MarioActions.LadderDown:
+                Move(0);
                 LadderDown();
                 break;
             default:
@@ -207,14 +198,12 @@ public class MarioAgent : Agent {
             discreteActions[0] = (int) MarioActions.MoveRight;
         } else if (Input.GetKey(KeyCode.LeftArrow)) {
             discreteActions[0] = (int) MarioActions.MoveLeft;
-        }
-        
-        if (Input.GetKey(KeyCode.Space)) {
-            discreteActions[1] = (int) MarioActions.Jump;
+        } else if (Input.GetKey(KeyCode.Space)) {
+            discreteActions[0] = (int) MarioActions.Jump;
         } else if (Input.GetKey(KeyCode.UpArrow)) {
-            discreteActions[1] = (int) MarioActions.LadderUp;
+            discreteActions[0] = (int) MarioActions.LadderUp;
         } else if (Input.GetKey(KeyCode.DownArrow)) {
-            discreteActions[1] = (int) MarioActions.LadderDown;
+            discreteActions[0] = (int) MarioActions.LadderDown;
         }
 
         // Cheat code to teleport to the top
