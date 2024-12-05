@@ -1,5 +1,9 @@
 # AI plays Donkey Kong
 
+### Install Unity
+
+[Unity 6 (6000.0.27f1) Download](https://unity.com/releases/editor/whats-new/6000.0.27#installs)
+
 ### Install ML-Agents Toolkit (Windows)
 
 [For linux it should be a similar instalation process]
