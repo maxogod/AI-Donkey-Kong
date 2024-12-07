@@ -17,10 +17,10 @@ conda activate mlagents
 pip3 install torch~=2.2.1 --index-url https://download.pytorch.org/whl/cu121
 
 # If using AMD ROC platform (only supported in linux)
-pip3 install torch~=2.2.1 torchvision torchaudio --index-url https://download.pytorch.org/whl/rocm6.2
+pip3 install torch~=2.2.1 --index-url https://download.pytorch.org/whl/rocm6.2
 
 # If not using GPU acceleration (CPU only)
-pip3 install torch~=2.2.1 torchvision torchaudio
+pip3 install torch~=2.2.1
 
 python -m pip install mlagents==1.1.0 # If downloading from PyPi, otherwise download it from the ML-Agents gh repo
 
