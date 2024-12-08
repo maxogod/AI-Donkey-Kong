@@ -4,9 +4,13 @@
 
 * *Click thumbnail to watch the video!*
 
-[<img width="360" src="https://github.com/user-attachments/assets/0b9c67ed-763a-4b4c-ae43-a1f917045036" />](https://www.youtube.com/watch?v=5XQuDkWKL-M)
+[<img width="360" alt="video" src="https://github.com/user-attachments/assets/0b9c67ed-763a-4b4c-ae43-a1f917045036" />](https://www.youtube.com/watch?v=5XQuDkWKL-M)
 
 ## Sneak peeks
+
+<img width="360" src="./imgs/1.gif" alt="easy ladder" />
+
+<img width="360" src="./imgs/2.gif" alt="hard ladder" />
 
 ## How to use
 
