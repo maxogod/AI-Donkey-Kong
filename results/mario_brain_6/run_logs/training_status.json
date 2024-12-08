@@ -1,0 +1,65 @@
+{
+    "Mario": {
+        "checkpoints": [
+            {
+                "steps": 1000052,
+                "file_path": "results\\mario_brain_6\\Mario\\Mario-1000052.onnx",
+                "reward": 6.598100647330284,
+                "creation_time": 1732499303.3408594,
+                "auxillary_file_paths": [
+                    "results\\mario_brain_6\\Mario\\Mario-1000052.pt"
+                ]
+            },
+            {
+                "steps": 1000052,
+                "file_path": "results\\mario_brain_6\\Mario\\Mario-1000052.onnx",
+                "reward": null,
+                "creation_time": 1732504044.729088,
+                "auxillary_file_paths": [
+                    "results\\mario_brain_6\\Mario\\Mario-1000052.pt"
+                ]
+            },
+            {
+                "steps": 1433032,
+                "file_path": "results\\mario_brain_6\\Mario\\Mario-1433032.onnx",
+                "reward": null,
+                "creation_time": 1732504732.6074314,
+                "auxillary_file_paths": [
+                    "results\\mario_brain_6\\Mario\\Mario-1433032.pt"
+                ]
+            },
+            {
+                "steps": 1433032,
+                "file_path": "results\\mario_brain_6\\Mario\\Mario-1433032.onnx",
+                "reward": null,
+                "creation_time": 1733618836.4661694,
+                "auxillary_file_paths": [
+                    "results\\mario_brain_6\\Mario\\Mario-1433032.pt"
+                ]
+            },
+            {
+                "steps": 1433032,
+                "file_path": "results\\mario_brain_6\\Mario\\Mario-1433032.onnx",
+                "reward": null,
+                "creation_time": 1733618903.6294017,
+                "auxillary_file_paths": [
+                    "results\\mario_brain_6\\Mario\\Mario-1433032.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 1433032,
+            "file_path": "results\\mario_brain_6\\Mario.onnx",
+            "reward": null,
+            "creation_time": 1733618903.6294017,
+            "auxillary_file_paths": [
+                "results\\mario_brain_6\\Mario\\Mario-1433032.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.1.0",
+        "torch_version": "2.2.2+cu121"
+    }
+}

@@ -1,0 +1,54 @@
+{
+    "name": "root",
+    "metadata": {
+        "timer_format_version": "0.1.0",
+        "start_time_seconds": "1733618896",
+        "python_version": "3.10.12 | packaged by Anaconda, Inc. | (main, Jul  5 2023, 19:01:18) [MSC v.1916 64 bit (AMD64)]",
+        "command_line_arguments": "C:\\Users\\MaxoWin\\miniconda3\\envs\\donkey\\Scripts\\mlagents-learn --run-id=mario_brain_6 --resume",
+        "mlagents_version": "1.1.0",
+        "mlagents_envs_version": "1.1.0",
+        "communication_protocol_version": "1.5.0",
+        "pytorch_version": "2.2.2+cu121",
+        "numpy_version": "1.23.5",
+        "end_time_seconds": "1733618903"
+    },
+    "total": 7.477241500004311,
+    "count": 1,
+    "self": 0.010021600006439257,
+    "children": {
+        "run_training.setup": {
+            "total": 0.039395699997839984,
+            "count": 1,
+            "self": 0.039395699997839984
+        },
+        "TrainerController.start_learning": {
+            "total": 7.427824200000032,
+            "count": 1,
+            "self": 0.00013719999697059393,
+            "children": {
+                "TrainerController._reset_env": {
+                    "total": 7.209005700002308,
+                    "count": 1,
+                    "self": 7.209005700002308
+                },
+                "trainer_threads": {
+                    "total": 8.999995770864189e-07,
+                    "count": 1,
+                    "self": 8.999995770864189e-07
+                },
+                "TrainerController._save_models": {
+                    "total": 0.21868040000117617,
+                    "count": 1,
+                    "self": 0.007622000004630536,
+                    "children": {
+                        "RLTrainer._checkpoint": {
+                            "total": 0.21105839999654563,
+                            "count": 1,
+                            "self": 0.21105839999654563
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

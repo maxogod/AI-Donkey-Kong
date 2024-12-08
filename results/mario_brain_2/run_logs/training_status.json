@@ -1,0 +1,29 @@
+{
+    "Mario": {
+        "checkpoints": [
+            {
+                "steps": 250060,
+                "file_path": "results\\mario_brain_2\\Mario\\Mario-250060.onnx",
+                "reward": null,
+                "creation_time": 1732406237.6495645,
+                "auxillary_file_paths": [
+                    "results\\mario_brain_2\\Mario\\Mario-250060.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 250060,
+            "file_path": "results\\mario_brain_2\\Mario.onnx",
+            "reward": null,
+            "creation_time": 1732406237.6495645,
+            "auxillary_file_paths": [
+                "results\\mario_brain_2\\Mario\\Mario-250060.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.1.0",
+        "torch_version": "2.2.2+cu121"
+    }
+}
