@@ -22,7 +22,7 @@
 
 [MiniConda Download](https://www.anaconda.com/download/)
 
-### Install Pytorch and ML-Agents Toolkit
+### Install [Pytorch](https://pytorch.org/) and [ML-Agents](https://github.com/Unity-Technologies/ml-agents) Toolkit
 
 ```powershell
 # Create from environment config file
