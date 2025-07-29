@@ -2,7 +2,7 @@
 
 * [Informe/Report](https://github.com/maxogod/AI-Donkey-Kong/blob/main/informe.pdf)
 
-* *Click thumbnail to watch the video!*
+* *Click thumbnail to watch the video! [[>]](https://www.youtube.com/watch?v=5XQuDkWKL-M)*
 
 [<img width="360" alt="video" src="https://github.com/user-attachments/assets/0b9c67ed-763a-4b4c-ae43-a1f917045036" />](https://www.youtube.com/watch?v=5XQuDkWKL-M)
 
