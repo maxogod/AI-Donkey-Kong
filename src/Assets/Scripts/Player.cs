@@ -1,5 +1,8 @@
 using UnityEngine;
 
+// Player is a controller for the character
+// to be used if manual movement is needed mainly for testing purposes.
+// for agent training or inference, MarioAgent controller should be used
 public class Player : MonoBehaviour
 {
     [Header("Movement Settings")]

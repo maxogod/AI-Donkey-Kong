@@ -1,3 +1,57 @@
+# LATEST PARAMETERS TESTED
+
+behaviors:
+    Mario:
+        trainer_type: ppo
+        hyperparameters:
+            batch_size: 512
+            buffer_size: 20480
+            learning_rate: 0.0003
+            beta: 0.01
+            epsilon: 0.2
+            lambd: 0.95
+            num_epoch: 3
+        network_settings:
+            normalize: true
+            hidden_units: 256
+            num_layers: 2
+        reward_signals:
+            extrinsic:
+                gamma: 0.99
+                strength: 1.0
+        max_steps: 2000000
+        time_horizon: 128
+        summary_freq: 1000
+
+# OLD PARAMETERS I
+
+# behaviors:
+#     Mario:
+#         trainer_type: ppo # Proximal Policy Optimization algorithm
+#         hyperparameters:
+#             batch_size: 512 # number of experiences used for each gradient update
+#             num_epoch: 3 # number of gradient steps
+#             buffer_size: 2048 # size of the experience buffer
+#             learning_rate: 1.0e-4 # how much the agent should learn from new experiences
+#             beta: 0.01 # strength of entropy regularization
+#             epsilon: 0.2 # acceptable threshold for ratio of old and new policy
+#             lambd: 0.95 # how much to weight old experiences
+#             learning_rate_schedule: linear # how to change the learning rate over time
+#         network_settings:
+#             # normalize: true # normalize the input states
+#             hidden_units: 256 # number of units in the hidden layers
+#             num_layers: 2 # number of hidden layers
+#         reward_signals:
+#             extrinsic:
+#                 gamma: 0.99 # the discount factor for rewards
+#                 strength: 1.0 # the strength of the reward signal
+#         # threaded: true # use multiple threads to collect experiences
+#         max_steps: 5000000 # number of steps to run the environment
+#         time_horizon: 128 # number of steps to collect per agent
+#         summary_freq: 10000 # how often to save the model
+
+# OLD PARAMETERS II
+
 # behaviors:
 #     Mario:
 #         trainer_type: ppo
@@ -23,50 +77,3 @@
 #         max_steps: 1500000
 #         time_horizon: 1024
 #         summary_freq: 1000
-
-behaviors:
-    Mario:
-        trainer_type: ppo
-        hyperparameters:
-            batch_size: 512
-            buffer_size: 20480
-            learning_rate: 0.0003
-            beta: 0.01
-            epsilon: 0.2
-            lambd: 0.95
-            num_epoch: 3
-        network_settings:
-            normalize: true
-            hidden_units: 256
-            num_layers: 2
-        reward_signals:
-            extrinsic:
-                gamma: 0.99
-                strength: 1.0
-        max_steps: 2000000
-        time_horizon: 128
-        summary_freq: 1000
-# behaviors:
-#     Mario:
-#         trainer_type: ppo # Proximal Policy Optimization algorithm
-#         hyperparameters:
-#             batch_size: 512 # number of experiences used for each gradient update
-#             num_epoch: 3 # number of gradient steps
-#             buffer_size: 2048 # size of the experience buffer
-#             learning_rate: 1.0e-4 # how much the agent should learn from new experiences
-#             beta: 0.01 # strength of entropy regularization
-#             epsilon: 0.2 # acceptable threshold for ratio of old and new policy
-#             lambd: 0.95 # how much to weight old experiences
-#             learning_rate_schedule: linear # how to change the learning rate over time
-#         network_settings:
-#             # normalize: true # normalize the input states
-#             hidden_units: 256 # number of units in the hidden layers
-#             num_layers: 2 # number of hidden layers
-#         reward_signals:
-#             extrinsic:
-#                 gamma: 0.99 # the discount factor for rewards
-#                 strength: 1.0 # the strength of the reward signal
-#         # threaded: true # use multiple threads to collect experiences
-#         max_steps: 5000000 # number of steps to run the environment
-#         time_horizon: 128 # number of steps to collect per agent
-#         summary_freq: 10000 # how often to save the model
